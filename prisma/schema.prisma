@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UsersRoles {
+  ADMIN
+  EMPLOYEE
+}
+
+enum SpecialtyTypes {
+  HAIRCUTS
+  MAKE_UP
+  MANICURE
+  MASSAGE
+  BARBER
+}
+
+model User {
+  id          String       @id @default(uuid())
+  email       String       @unique
+  password    String
+  role        UsersRoles   @default(EMPLOYEE)
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  UserProfile UserProfile?
+
+  @@map("users")
+}
+
+model UserProfile {
+  id          String           @id @default(uuid())
+  name        String
+  avatarUrl   String           @map("avatar_url")
+  specialties SpecialtyTypes[]
+  createdAt   DateTime         @default(now()) @map("created_at")
+  updatedAt   DateTime         @updatedAt @map("updated_at")
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique @map("user_id")
+
+  @@map("user_profiles")
+}
+
+model Company {
+  id          String           @id @default(uuid())
+  name        String
+  logoUrl     String           @map("logo_url")
+  description String
+  types       SpecialtyTypes[]
+  cnpj        String           @unique
+  createdAt   DateTime         @default(now()) @map("created_at")
+  updatedAt   DateTime         @updatedAt @map("updated_at")
+
+  OperationTime  OperationTime?
+  CompanyAddress CompanyAddress?
+
+  @@map("companies")
+}
+
+model OperationTime {
+  id              String   @id @default(uuid())
+  startMorning    String   @map("start_morning")
+  endMorning      String?  @map("end_morning")
+  start_afternoon String?  @map("start_afternoon")
+  end_afternoon   String   @map("end_afternoon")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String  @unique @map("company_id")
+
+  @@map("operations_times")
+}
+
+model CompanyAddress {
+  id         String   @id @default(uuid())
+  city       String
+  street     String
+  district   String
+  reference  String?
+  complement String?
+  number     Int?
+  zipCode    String?  @map("zip_code")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String  @unique @map("company_id")
+
+  @@map("companies_addresses")
+}

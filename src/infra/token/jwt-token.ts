@@ -7,7 +7,7 @@ export class Token implements IToken {
   constructor() {}
 
   generateToken(sub: string, data: Record<string, any>): string {
-    return jwt.sign({ sub, ...data }, env.jwtSecret, { expiresIn: '7d' });
+    return jwt.sign({ sub, ...data }, env.jwtSecret, { expiresIn: '7 days' });
   }
 
   verifyToken(token: string): string | jwt.JwtPayload {

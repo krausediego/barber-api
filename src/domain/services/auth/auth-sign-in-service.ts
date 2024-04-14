@@ -21,7 +21,7 @@ export class AuthSignInService extends BaseService implements IAuthSignIn {
   async run({
     traceId,
     ...params
-  }: IAuthSignIn.Params): Promise<IAuthSignIn.Reponse> {
+  }: IAuthSignIn.Params): Promise<IAuthSignIn.Response> {
     this.traceId = traceId;
 
     this.log('debug', 'Start process sign-in.');

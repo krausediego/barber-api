@@ -1,7 +1,7 @@
 import { ICompaniesRepository } from '@/domain/interfaces';
 
 export interface ICreateCompany {
-  run(params: ICreateCompany.Params): Promise<ICreateCompany.Reponse>;
+  run(params: ICreateCompany.Params): Promise<ICreateCompany.Response>;
 }
 
 export namespace ICreateCompany {
@@ -14,7 +14,7 @@ export namespace ICreateCompany {
     locals: any;
   };
 
-  export interface Reponse {
+  export interface Response {
     company: ICompaniesRepository.Company;
   }
 }

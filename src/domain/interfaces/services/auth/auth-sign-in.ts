@@ -1,5 +1,5 @@
 export interface IAuthSignIn {
-  run(params: IAuthSignIn.Params): Promise<IAuthSignIn.Reponse>;
+  run(params: IAuthSignIn.Params): Promise<IAuthSignIn.Response>;
 }
 
 export namespace IAuthSignIn {
@@ -14,7 +14,7 @@ export namespace IAuthSignIn {
     locals: any;
   };
 
-  export interface Reponse {
+  export interface Response {
     token: string;
   }
 }

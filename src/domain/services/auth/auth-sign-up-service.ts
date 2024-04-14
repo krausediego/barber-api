@@ -18,7 +18,7 @@ export class AuthSignUpService extends BaseService implements IAuthSignUp {
     super(logger);
   }
 
-  async run(params: IAuthSignUp.Params): Promise<IAuthSignUp.Reponse> {
+  async run(params: IAuthSignUp.Params): Promise<IAuthSignUp.Response> {
     const { email, password, role, traceId } = params;
 
     this.traceId = traceId;

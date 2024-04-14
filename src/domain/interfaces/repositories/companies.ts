@@ -1,4 +1,4 @@
-import { SpecialtyTypes } from '../utils';
+import { SpecialtyTypes } from '@/domain/interfaces/utils';
 
 export interface ICompaniesRepository {
   create(
@@ -6,6 +6,9 @@ export interface ICompaniesRepository {
   ): Promise<ICompaniesRepository.Company>;
   findByCnpj(
     data: ICompaniesRepository.FindByCnpj,
+  ): Promise<ICompaniesRepository.Company | null>;
+  findById(
+    data: ICompaniesRepository.FindById,
   ): Promise<ICompaniesRepository.Company | null>;
 }
 
@@ -43,5 +46,9 @@ export namespace ICompaniesRepository {
 
   export interface FindByCnpj {
     cnpj: string;
+  }
+
+  export interface FindById {
+    id: string;
   }
 }

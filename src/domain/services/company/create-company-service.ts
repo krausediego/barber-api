@@ -40,7 +40,7 @@ export class CreateCompanyService
 
     const logoUrl = await this.gcpStorage.uploadFile({
       bucketName: 'barber-api',
-      fileName,
+      fileName: `${new Date().getTime()}_${fileName}`,
       buffer,
       mimetype,
     });

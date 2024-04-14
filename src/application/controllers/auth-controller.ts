@@ -1,4 +1,4 @@
-import { getHttpError, ok } from '@/application/helpers';
+import { getHttpError, noContent, ok } from '@/application/helpers';
 import { Controller, Http } from '@/application/interfaces';
 import { IAuth, IAuthSignIn, IAuthSignUp } from '@/domain/interfaces/services';
 
@@ -23,13 +23,21 @@ export class AuthController implements Controller {
   }: IAuthSignIn.ParamsService): Promise<Http.Response> {
     const { email, password } = params;
 
-    const content = await (this.service() as IAuthSignIn).run({
+    const { token } = await (this.service() as IAuthSignIn).run({
       email,
       password,
       traceId: locals?.traceId,
     });
 
-    return ok({ ...content });
+    return noContent({
+      name: 'token',
+      val: token,
+      options: {
+        httpOnly: true,
+        maxAge: 7 * 86400,
+        path: '/',
+      },
+    });
   }
 
   private async authSignUp({

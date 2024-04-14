@@ -15,6 +15,7 @@ export const adaptMiddleware = (
     const data = {
       accessToken: req.headers?.['x-access-token'],
       ...(req.headers ?? {}),
+      ...(req.cookies ?? {}),
       body: req.body ?? {},
       params: req.params ?? {},
       query: req.query ?? {},

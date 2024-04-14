@@ -19,7 +19,7 @@ export class CreateCompanyService
     super(logger);
   }
 
-  async run(params: ICreateCompany.Params): Promise<ICreateCompany.Reponse> {
+  async run(params: ICreateCompany.Params): Promise<ICreateCompany.Response> {
     const { name, logo, description, types, cnpj, traceId } = params;
     const { fileName, buffer, mimetype } = logo;
 

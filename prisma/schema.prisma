@@ -85,6 +85,7 @@ model OperationTime {
 
 model CompanyAddress {
   id         String   @id @default(uuid())
+  state      String
   city       String
   street     String
   district   String

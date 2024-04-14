@@ -16,4 +16,10 @@ export class CompaniesRepository implements ICompaniesRepository {
       .getPrisma()
       .company.findUnique({ where: { cnpj } });
   }
+
+  async findById({
+    id,
+  }: ICompaniesRepository.FindById): Promise<ICompaniesRepository.Company | null> {
+    return this.prismaManager.getPrisma().company.findUnique({ where: { id } });
+  }
 }

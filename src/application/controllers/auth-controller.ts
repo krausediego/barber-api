@@ -34,7 +34,7 @@ export class AuthController implements Controller {
       val: token,
       options: {
         httpOnly: true,
-        maxAge: 7 * 86400,
+        maxAge: 7 * 864000,
         path: '/',
       },
     });

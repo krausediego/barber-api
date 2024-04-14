@@ -1,7 +1,7 @@
 import { IUsersRepository } from '../../repositories';
 
 export interface IAuthSignUp {
-  run(params: IAuthSignUp.Params): Promise<IAuthSignUp.Reponse>;
+  run(params: IAuthSignUp.Params): Promise<IAuthSignUp.Response>;
 }
 
 export namespace IAuthSignUp {
@@ -14,7 +14,7 @@ export namespace IAuthSignUp {
     locals: any;
   };
 
-  export interface Reponse {
+  export interface Response {
     token: string;
   }
 }

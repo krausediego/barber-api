@@ -16,18 +16,27 @@ type errorTypes =
   | UnauthorizedError
   | ConflictError;
 
-export const ok = (data: Record<string, any>): Http.Response => ({
+export const ok = (
+  data: Record<string, any>,
+  cookie?: Http.CookieProps,
+): Http.Response => ({
   statusCode: 200,
   body: data,
+  cookie,
 });
 
-export const created = (data: Record<string, any>): Http.Response => ({
+export const created = (
+  data: Record<string, any>,
+  cookie?: Http.CookieProps,
+): Http.Response => ({
   statusCode: 201,
   body: data,
+  cookie,
 });
 
-export const noContent = (): Http.Response => ({
+export const noContent = (cookie?: Http.CookieProps): Http.Response => ({
   statusCode: 204,
+  cookie,
 });
 
 export const getHttpError = (error: errorTypes): Http.Response => ({

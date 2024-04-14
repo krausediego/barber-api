@@ -25,8 +25,20 @@ export const adaptRoute = (controller: Controller) => {
       locals: req.locals,
     });
 
-    if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
+    if (
+      httpResponse.statusCode >= 200 &&
+      httpResponse.statusCode <= 299 &&
+      !httpResponse.cookie
+    ) {
       res.status(httpResponse.statusCode).json(httpResponse?.body);
+    } else if (
+      httpResponse.statusCode >= 200 &&
+      httpResponse.statusCode <= 299 &&
+      httpResponse.cookie
+    ) {
+      const { name, val, options } = httpResponse.cookie;
+
+      res.status(httpResponse.statusCode).cookie(name, val, options).send();
     } else if (httpResponse?.body instanceof Error) {
       res.status(httpResponse.statusCode).json({
         message: httpResponse?.body?.message,

@@ -7,13 +7,14 @@ import {
   makeCompaniesAddressesRepository,
   makeCompaniesRepository,
 } from '@/main/factories/domain/repositories';
-import { makeLogging } from '@/main/factories/infra';
+import { makeHttpRequestManager, makeLogging } from '@/main/factories/infra';
 
 const createCompanyAddress = (): ICreateCompanyAddress => {
   return new CreateCompanyAddressService(
     makeLogging(),
     makeCompaniesAddressesRepository(),
     makeCompaniesRepository(),
+    makeHttpRequestManager(),
   );
 };
 

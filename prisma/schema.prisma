@@ -89,10 +89,12 @@ model CompanyAddress {
   city       String
   street     String
   district   String
+  lat        Float
+  long       Float
+  number     Int
+  zipCode    String   @map("zip_code")
   reference  String?
   complement String?
-  number     Int?
-  zipCode    String?  @map("zip_code")
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
 

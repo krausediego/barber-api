@@ -14,12 +14,14 @@ export namespace ICompaniesAddressesRepository {
     city: string;
     street: string;
     district: string;
+    lat: number;
+    long: number;
+    number: number;
+    zipCode: string;
     companyId: string;
     createdAt: Date;
     reference: string | null;
     complement: string | null;
-    number: number | null;
-    zipCode: string | null;
     updatedAt?: Date;
   }
 
@@ -28,11 +30,13 @@ export namespace ICompaniesAddressesRepository {
     city: string;
     street: string;
     district: string;
+    lat: number;
+    long: number;
+    number: number;
+    zipCode: string;
     companyId: string;
-    reference?: string;
-    complement?: string;
-    number?: number;
-    zipCode?: string;
+    reference: string | null;
+    complement: string | null;
   }
 
   export interface FindByCompanyId {

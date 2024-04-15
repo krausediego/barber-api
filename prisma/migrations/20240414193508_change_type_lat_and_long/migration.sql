@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "companies_addresses" ALTER COLUMN "lat" SET DATA TYPE TEXT,
+ALTER COLUMN "long" SET DATA TYPE TEXT;

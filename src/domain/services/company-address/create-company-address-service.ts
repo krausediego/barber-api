@@ -1,11 +1,13 @@
 import { ConflictError, NotFoundError } from '@/application/errors';
 import { BaseService } from '@/application/helpers';
 import {
+  HttpRequest,
   ICompaniesAddressesRepository,
   ICompaniesRepository,
   ICreateCompanyAddress,
   LoggingManager,
 } from '@/domain/interfaces';
+import env from '@/main/config/environments/geocoding';
 
 export class CreateCompanyAddressService
   extends BaseService
@@ -15,6 +17,7 @@ export class CreateCompanyAddressService
     protected readonly logger: LoggingManager,
     private readonly companiesAddressesRepository: ICompaniesAddressesRepository,
     private readonly companiesRepository: ICompaniesRepository,
+    private readonly httpRequest: HttpRequest,
   ) {
     super(logger);
   }
@@ -53,9 +56,24 @@ export class CreateCompanyAddressService
       throw new ConflictError('Company address already exists.');
     }
 
+    this.log('info', 'Find lat and long by address.');
+
+    const addressGeocoding = data.street.split(' ').join('+');
+    const { results } = await this.httpRequest.get({
+      url: `${env.baseUrl}${addressGeocoding}&key=${env.apiKey}`,
+    });
+
+    this.log('info', 'Lat and long find.');
+
+    const { location } = results[0].geometry;
+
     this.log('info', 'Create company address in database.');
 
-    const companyAddress = await this.companiesAddressesRepository.create(data);
+    const companyAddress = await this.companiesAddressesRepository.create({
+      ...data,
+      lat: location.lat,
+      long: location.lng,
+    });
 
     this.log('info', 'Finish process.');
 

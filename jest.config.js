@@ -8,7 +8,7 @@ module.exports = {
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov'],
-  roots: ['<rootDir>/src', '<rootDir>/tests'],
+  roots: ['<rootDir>/src'],
   testEnvironment: 'node',
   testMatch: ['**/*.(spec|test).[tj]s'],
   transform: {
@@ -16,7 +16,7 @@ module.exports = {
   },
   moduleNameMapper: {
     '@/(.*)': '<rootDir>/src/$1',
-    '@/tests/(.+)': '<rootDir>/tests/$1',
+    '@/tests/(.+)': '<rootDir>/src/tests/$1',
   },
-  setupFiles: ['<rootDir>/tests/env/setEnvVars.ts'],
+  // setupFiles: ['<rootDir>/tests/env/setEnvVars.ts'],
 };

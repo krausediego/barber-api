@@ -33,6 +33,7 @@ module.exports = [
       SharedArrayBuffer: 'readonly',
     },
     rules: {
+      'import/no-extraneous-dependencies': 'off',
       'no-empty-function': 'off',
       'prettier/prettier': [
         'error',

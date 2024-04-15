@@ -1,5 +1,3 @@
-import { UserRolesEnum } from '@/domain/interfaces';
-
 export interface IUsersRepository {
   create(data: IUsersRepository.CreateUser): Promise<IUsersRepository.User>;
   findByEmail(
@@ -12,15 +10,15 @@ export namespace IUsersRepository {
     id: string;
     email: string;
     password: string;
-    role: UserRolesEnum;
+    role: 'EMPLOYEE' | 'ADMIN';
     createdAt: Date;
-    updatedAt?: Date;
+    updatedAt: Date | null;
   }
 
   export interface CreateUser {
     email: string;
     password: string;
-    role?: UserRolesEnum;
+    role?: 'EMPLOYEE' | 'ADMIN';
   }
 
   export interface FindByEmail {

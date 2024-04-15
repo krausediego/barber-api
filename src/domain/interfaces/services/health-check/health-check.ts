@@ -7,5 +7,7 @@ export namespace HealthCheck {
     traceId?: string;
   }
 
-  export type Response = Record<string, boolean | Record<string, boolean>>;
+  export type Response = {
+    postgresql: boolean;
+  };
 }

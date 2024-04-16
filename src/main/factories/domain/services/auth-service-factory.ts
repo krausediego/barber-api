@@ -17,7 +17,6 @@ const authSignUp = (): IAuthSignUp => {
     makeLogging(),
     makeUsersRepository(),
     makeHash(),
-    makeToken(),
   );
 };
 

@@ -10,7 +10,6 @@ describe('AuthControllerSignUp', () => {
   let authSignUpService: MockProxy<IAuthSignUp>;
   let content: Http.Request;
   let params: IAuthSignUp.Params;
-  let response: IAuthSignUp.Response;
 
   beforeAll(() => {
     params = { email: 'test@gmail.com', password: 'test12345' };
@@ -21,13 +20,11 @@ describe('AuthControllerSignUp', () => {
       data: { ...params },
       locals: { traceId: 'trace-id' },
     };
-
-    response = { token: 'abc' };
   });
 
   beforeEach(() => {
     authSignUpService = mock();
-    authSignUpService.run.mockResolvedValue(Promise.resolve(response));
+    authSignUpService.run.mockResolvedValue(Promise.resolve());
     sut = new AuthController('authSignUp', () => authSignUpService);
   });
 
@@ -41,15 +38,6 @@ describe('AuthControllerSignUp', () => {
     expect(authSignUpService.run).toHaveBeenCalledTimes(1);
     expect(httpResponse).toEqual({
       statusCode: 204,
-      cookie: {
-        name: 'token',
-        val: 'abc',
-        options: {
-          httpOnly: true,
-          maxAge: 6048000,
-          path: '/',
-        },
-      },
     });
   });
 
@@ -59,15 +47,6 @@ describe('AuthControllerSignUp', () => {
     expect(authSignUpService.run).toHaveBeenCalledTimes(1);
     expect(httpResponse).toEqual({
       statusCode: 204,
-      cookie: {
-        name: 'token',
-        val: 'abc',
-        options: {
-          httpOnly: true,
-          maxAge: 6048000,
-          path: '/',
-        },
-      },
     });
   });
 
@@ -79,15 +58,6 @@ describe('AuthControllerSignUp', () => {
     expect(authSignUpService.run).toHaveBeenCalledTimes(1);
     expect(httpResponse).toEqual({
       statusCode: 204,
-      cookie: {
-        name: 'token',
-        val: 'abc',
-        options: {
-          httpOnly: true,
-          maxAge: 6048000,
-          path: '/',
-        },
-      },
     });
   });
 

@@ -46,21 +46,13 @@ export class AuthController implements Controller {
   }: IAuthSignUp.ParamsService): Promise<Http.Response> {
     const { email, password, role } = params;
 
-    const { token } = await (this.service() as IAuthSignUp).run({
+    await (this.service() as IAuthSignUp).run({
       email,
       password,
       role,
       traceId: locals?.traceId,
     });
 
-    return noContent({
-      name: 'token',
-      val: token,
-      options: {
-        httpOnly: true,
-        maxAge: 7 * 864000,
-        path: '/',
-      },
-    });
+    return noContent();
   }
 }

@@ -3,7 +3,6 @@ import { BaseService } from '@/application/helpers';
 import {
   IAuthSignUp,
   IHashManager,
-  IToken,
   IUsersRepository,
   LoggingManager,
 } from '@/domain/interfaces';
@@ -13,12 +12,11 @@ export class AuthSignUpService extends BaseService implements IAuthSignUp {
     protected readonly logger: LoggingManager,
     private readonly usersRepository: IUsersRepository,
     private readonly hash: IHashManager,
-    private readonly token: IToken,
   ) {
     super(logger);
   }
 
-  async run(params: IAuthSignUp.Params): Promise<IAuthSignUp.Response> {
+  async run(params: IAuthSignUp.Params): Promise<void> {
     const { email, password, role, traceId } = params;
 
     this.traceId = traceId;
@@ -51,12 +49,6 @@ export class AuthSignUpService extends BaseService implements IAuthSignUp {
       throw new BadRequestError('Error create user in database.');
     }
 
-    this.log('debug', 'Generate token, and return to client requested.');
-
-    const token = this.token.generateToken(user.id, { role: user.role });
-
     this.log('debug', 'Finish process sign-up.');
-
-    return { token };
   }
 }

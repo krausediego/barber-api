@@ -69,13 +69,13 @@ model Company {
 }
 
 model OperationTime {
-  id              String   @id @default(uuid())
-  startMorning    String   @map("start_morning")
-  endMorning      String?  @map("end_morning")
-  start_afternoon String?  @map("start_afternoon")
-  end_afternoon   String   @map("end_afternoon")
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @map("updated_at")
+  id             String   @id @default(uuid())
+  startMorning   String   @map("start_morning")
+  endMorning     String?  @map("end_morning")
+  startAfternoon String?  @map("start_afternoon")
+  endAfternoon   String   @map("end_afternoon")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
 
   company   Company @relation(fields: [companyId], references: [id])
   companyId String  @unique @map("company_id")

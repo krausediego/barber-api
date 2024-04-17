@@ -16,4 +16,10 @@ export default (router: Router): void => {
     validateRequest(createUserProfileValidateSchema),
     adaptRoute(makeUserProfileController('createUserProfile')),
   );
+
+  router.get(
+    '/user-profile/find',
+    authClient,
+    adaptRoute(makeUserProfileController('findUserProfile')),
+  );
 };

@@ -1,6 +1,10 @@
 import { getHttpError, ok } from '@/application/helpers';
 import { Controller, Http } from '@/application/interfaces';
-import { IUserProfile, ICreateUserProfile } from '@/domain/interfaces/services';
+import {
+  IUserProfile,
+  ICreateUserProfile,
+  IFindUserProfile,
+} from '@/domain/interfaces/services';
 
 export class UserProfileController implements Controller {
   constructor(
@@ -23,6 +27,17 @@ export class UserProfileController implements Controller {
   }: ICreateUserProfile.ParamsService): Promise<Http.Response> {
     const content = await (this.service() as ICreateUserProfile).run({
       ...params,
+      userId: locals?.user?.sub,
+      traceId: locals?.traceId,
+    });
+
+    return ok({ ...content });
+  }
+
+  private async findUserProfile({
+    locals,
+  }: IFindUserProfile.ParamsService): Promise<Http.Response> {
+    const content = await (this.service() as IFindUserProfile).run({
       userId: locals?.user?.sub,
       traceId: locals?.traceId,
     });

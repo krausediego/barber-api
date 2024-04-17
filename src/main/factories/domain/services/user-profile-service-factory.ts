@@ -1,5 +1,12 @@
-import { IUserProfile, ICreateUserProfile } from '@/domain/interfaces/services';
-import { CreateUserProfileService } from '@/domain/services';
+import {
+  IUserProfile,
+  ICreateUserProfile,
+  IFindUserProfile,
+} from '@/domain/interfaces/services';
+import {
+  CreateUserProfileService,
+  FindUserProfileService,
+} from '@/domain/services';
 import {
   makeUsersProfilesRepository,
   makeUsersRepository,
@@ -15,8 +22,16 @@ const createUserProfile = (): ICreateUserProfile => {
   );
 };
 
+const findUserProfile = (): IFindUserProfile => {
+  return new FindUserProfileService(
+    makeLogging(),
+    makeUsersProfilesRepository(),
+  );
+};
+
 const services = {
   createUserProfile,
+  findUserProfile,
 };
 
 export const makeUserProfileService = (

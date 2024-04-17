@@ -23,6 +23,7 @@ export class UserProfileController implements Controller {
   }: ICreateUserProfile.ParamsService): Promise<Http.Response> {
     const content = await (this.service() as ICreateUserProfile).run({
       ...params,
+      userId: locals?.user?.sub,
       traceId: locals?.traceId,
     });
 

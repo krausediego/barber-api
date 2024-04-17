@@ -11,5 +11,4 @@ const typesEnum = z.enum([
 export const createUserProfileValidateSchema = z.object({
   name: z.string().min(4),
   specialties: z.union([typesEnum, z.array(typesEnum)]),
-  userId: z.string().uuid(),
 });

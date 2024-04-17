@@ -25,6 +25,8 @@ export class CreateUserProfileService
     traceId,
     ...props
   }: ICreateUserProfile.Params): Promise<ICreateUserProfile.Response> {
+    const { fileName, buffer, mimetype } = props.avatar;
+
     this.traceId = traceId;
 
     this.log('info', 'Start process create user profile.');
@@ -52,10 +54,12 @@ export class CreateUserProfileService
 
     const avatarUrl = await this.gcpStorage.uploadFile({
       bucketName: 'barber_api_profile_avatar',
-      fileName: `${new Date().getTime()}_${props.avatar.fileName}`,
-      buffer: props.avatar.buffer,
-      mimetype: props.avatar.mimetype,
+      fileName: `${new Date().getTime()}_${fileName}`,
+      buffer,
+      mimetype,
     });
+
+    this.log('info', 'Sending avatar successfully.', { avatarUrl });
 
     this.log('info', 'Save user profile in database.');
 

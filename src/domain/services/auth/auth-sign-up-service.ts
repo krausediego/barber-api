@@ -16,16 +16,16 @@ export class AuthSignUpService extends BaseService implements IAuthSignUp {
     super(logger);
   }
 
-  async run(params: IAuthSignUp.Params): Promise<void> {
-    const { email, password, role, traceId } = params;
-
+  async run({ traceId, ...props }: IAuthSignUp.Params): Promise<void> {
     this.traceId = traceId;
 
     this.log('info', 'Start process sign-up.');
 
     this.log('info', 'Starting the search to see if the user already exists.');
 
-    const userExists = await this.usersRepository.findByEmail({ email });
+    const userExists = await this.usersRepository.findByEmail({
+      email: props.email,
+    });
 
     if (userExists) {
       this.log('warn', 'Email in use, try another or login.');
@@ -34,14 +34,14 @@ export class AuthSignUpService extends BaseService implements IAuthSignUp {
 
     this.log('info', 'Encrypt password.');
 
-    const passwordHash = await this.hash.generateHash(password);
+    const passwordHash = await this.hash.generateHash(props.password);
 
     this.log('info', 'Create user in database.');
 
     const user = await this.usersRepository.create({
-      email,
+      email: props.email,
       password: passwordHash,
-      role,
+      role: props.role,
     });
 
     if (!user) {

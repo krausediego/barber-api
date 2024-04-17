@@ -22,11 +22,10 @@ export class CreateCompanyAddressService
     super(logger);
   }
 
-  async run(
-    params: ICreateCompanyAddress.Params,
-  ): Promise<ICreateCompanyAddress.Response> {
-    const { traceId, ...data } = params;
-
+  async run({
+    traceId,
+    ...props
+  }: ICreateCompanyAddress.Params): Promise<ICreateCompanyAddress.Response> {
     this.traceId = traceId;
 
     this.log('info', 'Start process create company address.');
@@ -34,7 +33,7 @@ export class CreateCompanyAddressService
     this.log('info', 'Find company by companyId provided.');
 
     const company = await this.companiesRepository.findById({
-      id: data.companyId,
+      id: props.companyId,
     });
 
     if (!company) {
@@ -48,7 +47,7 @@ export class CreateCompanyAddressService
 
     const addressAlreadyExists =
       await this.companiesAddressesRepository.findByCompanyId({
-        companyId: data.companyId,
+        companyId: props.companyId,
       });
 
     if (addressAlreadyExists) {
@@ -58,7 +57,7 @@ export class CreateCompanyAddressService
 
     this.log('info', 'Find lat and long by address.');
 
-    const addressGeocoding = data.street.split(' ').join('+');
+    const addressGeocoding = props.street.split(' ').join('+');
     const { results } = await this.httpRequest.get({
       url: `${env.baseUrl}${addressGeocoding}&key=${env.apiKey}`,
     });
@@ -70,7 +69,7 @@ export class CreateCompanyAddressService
     this.log('info', 'Create company address in database.');
 
     const companyAddress = await this.companiesAddressesRepository.create({
-      ...data,
+      ...props,
       lat: location.lat,
       long: location.lng,
     });

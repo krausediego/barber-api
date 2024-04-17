@@ -40,7 +40,7 @@ export class AuthClientMiddleware extends BaseService implements Middleware {
         throw new UnauthorizedError('Token is invalid.');
       }
 
-      return ok({ tokenValidate });
+      return ok({ user: tokenValidate });
     } catch (error: any) {
       this.log('warn', error);
       return getHttpError(error);

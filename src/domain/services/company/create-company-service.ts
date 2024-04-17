@@ -19,9 +19,11 @@ export class CreateCompanyService
     super(logger);
   }
 
-  async run(params: ICreateCompany.Params): Promise<ICreateCompany.Response> {
-    const { name, logo, description, types, cnpj, traceId } = params;
-    const { fileName, buffer, mimetype } = logo;
+  async run({
+    traceId,
+    ...props
+  }: ICreateCompany.Params): Promise<ICreateCompany.Response> {
+    const { fileName, buffer, mimetype } = props.logo;
 
     this.traceId = traceId;
 
@@ -29,7 +31,9 @@ export class CreateCompanyService
 
     this.log('info', 'Find company already exists.');
 
-    const companyExists = await this.companiesRepository.findByCnpj({ cnpj });
+    const companyExists = await this.companiesRepository.findByCnpj({
+      cnpj: props.cnpj,
+    });
 
     if (companyExists) {
       this.log('warn', 'Company already exists.');
@@ -39,7 +43,7 @@ export class CreateCompanyService
     this.log('info', 'Sending logo to GCP bucket.');
 
     const logoUrl = await this.gcpStorage.uploadFile({
-      bucketName: 'barber-api',
+      bucketName: 'barber_api_companies_logos',
       fileName: `${new Date().getTime()}_${fileName}`,
       buffer,
       mimetype,
@@ -50,11 +54,11 @@ export class CreateCompanyService
     this.log('info', 'Create company in database.');
 
     const company = await this.companiesRepository.create({
-      name,
-      description,
+      name: props.name,
+      description: props.description,
       logoUrl,
-      types: typeof types === 'object' ? types : Array(types),
-      cnpj,
+      types: typeof props.types === 'object' ? props.types : Array(props.types),
+      cnpj: props.cnpj,
     });
 
     this.log('info', 'Created successfully, finish process.');

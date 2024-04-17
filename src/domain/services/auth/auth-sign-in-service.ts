@@ -20,7 +20,7 @@ export class AuthSignInService extends BaseService implements IAuthSignIn {
 
   async run({
     traceId,
-    ...params
+    ...props
   }: IAuthSignIn.Params): Promise<IAuthSignIn.Response> {
     this.traceId = traceId;
 
@@ -29,7 +29,7 @@ export class AuthSignInService extends BaseService implements IAuthSignIn {
     this.log('debug', 'Find user by email.');
 
     const userExists = await this.usersRepository.findByEmail({
-      email: params.email,
+      email: props.email,
     });
 
     if (!userExists) {
@@ -40,7 +40,7 @@ export class AuthSignInService extends BaseService implements IAuthSignIn {
     this.log('debug', 'Check password is valid.');
 
     const userCredentials = await this.hashManager.compareHash(
-      params.password,
+      props.password,
       userExists.password,
     );
 
@@ -51,7 +51,9 @@ export class AuthSignInService extends BaseService implements IAuthSignIn {
 
     this.log('debug', 'Generate token, and return to client requested.');
 
-    const token = this.token.generateToken('a');
+    const token = this.token.generateToken(userExists.id, {
+      role: userExists.role,
+    });
 
     this.log('debug', 'Finish process sign-in.');
 

@@ -3,6 +3,9 @@ export interface IUsersRepository {
   findByEmail(
     data: IUsersRepository.FindByEmail,
   ): Promise<IUsersRepository.User | null>;
+  findByIdUser(
+    data: IUsersRepository.FindById,
+  ): Promise<IUsersRepository.User | null>;
 }
 
 export namespace IUsersRepository {
@@ -23,5 +26,9 @@ export namespace IUsersRepository {
 
   export interface FindByEmail {
     email: string;
+  }
+
+  export interface FindById {
+    id: string;
   }
 }

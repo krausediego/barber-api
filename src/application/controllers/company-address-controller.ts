@@ -25,8 +25,8 @@ export class CompanyAddressController implements Controller {
     locals,
   }: ICreateCompanyAddress.ParamsService): Promise<Http.Response> {
     const content = await (this.service() as ICreateCompanyAddress).run({
-      traceId: locals?.traceId,
       ...params,
+      traceId: locals?.traceId,
     });
 
     return ok({ ...content });

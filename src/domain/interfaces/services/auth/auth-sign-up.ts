@@ -1,3 +1,5 @@
+import { Locals } from '@/application/interfaces';
+
 import { IUsersRepository } from '../../repositories';
 
 export interface IAuthSignUp {
@@ -11,6 +13,6 @@ export namespace IAuthSignUp {
 
   export type ParamsService = {
     params: Params;
-    locals: any;
+    locals: Locals;
   };
 }

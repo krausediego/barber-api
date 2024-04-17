@@ -38,6 +38,10 @@ export const adaptRoute = (controller: Controller) => {
     ) {
       const { name, val, options } = httpResponse.cookie;
 
+      if (httpResponse.clearCookie) {
+        res.clearCookie(httpResponse.clearCookie);
+      }
+
       res.status(httpResponse.statusCode).cookie(name, val, options).send();
     } else if (httpResponse?.body instanceof Error) {
       res.status(httpResponse.statusCode).json({

@@ -1,3 +1,4 @@
+import { Locals } from '@/application/interfaces';
 import { IUsersProfilesRepository } from '@/domain/interfaces';
 
 export interface ICreateUserProfile {
@@ -11,7 +12,7 @@ export namespace ICreateUserProfile {
 
   export type ParamsService = {
     params: Params;
-    locals: any;
+    locals: Locals;
   };
 
   export interface Response {

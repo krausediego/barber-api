@@ -19,10 +19,12 @@ type errorTypes =
 export const ok = (
   data: Record<string, any>,
   cookie?: Http.CookieProps,
+  clearCookie?: string,
 ): Http.Response => ({
   statusCode: 200,
   body: data,
   cookie,
+  clearCookie,
 });
 
 export const created = (
@@ -34,9 +36,13 @@ export const created = (
   cookie,
 });
 
-export const noContent = (cookie?: Http.CookieProps): Http.Response => ({
+export const noContent = (
+  cookie?: Http.CookieProps,
+  clearCookie?: string,
+): Http.Response => ({
   statusCode: 204,
   cookie,
+  clearCookie,
 });
 
 export const getHttpError = (error: errorTypes): Http.Response => ({

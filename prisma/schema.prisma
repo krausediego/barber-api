@@ -34,6 +34,7 @@ model User {
   createdAt   DateTime     @default(now()) @map("created_at")
   updatedAt   DateTime     @updatedAt @map("updated_at")
   UserProfile UserProfile?
+  CompanyUser CompanyUser?
 
   @@map("users")
 }
@@ -52,6 +53,31 @@ model UserProfile {
   @@map("user_profiles")
 }
 
+model CompanyUser {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String  @unique @map("user_id")
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String  @map("company_id")
+
+  @@map("companies_users")
+}
+
+model CompanyInvites {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String  @map("company_id")
+
+  @@map("companies_invites")
+}
+
 model Company {
   id          String           @id @default(uuid())
   name        String
@@ -64,6 +90,8 @@ model Company {
 
   OperationTime  OperationTime?
   CompanyAddress CompanyAddress?
+  CompanyUser    CompanyUser[]
+  CompanyInvites CompanyInvites[]
 
   @@map("companies")
 }

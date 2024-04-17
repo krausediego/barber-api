@@ -20,4 +20,11 @@ export class UsersRepository implements IUsersRepository {
   }: IUsersRepository.FindById): Promise<IUsersRepository.User | null> {
     return this.prismaManager.getPrisma().user.findUnique({ where: { id } });
   }
+
+  async update(
+    id: string,
+    data: IUsersRepository.UpdateUser,
+  ): Promise<IUsersRepository.User> {
+    return this.prismaManager.getPrisma().user.update({ data, where: { id } });
+  }
 }

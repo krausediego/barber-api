@@ -1,3 +1,5 @@
+import { Locals } from '@/application/interfaces';
+
 export interface IAuthSignIn {
   run(params: IAuthSignIn.Params): Promise<IAuthSignIn.Response>;
 }
@@ -11,7 +13,7 @@ export namespace IAuthSignIn {
 
   export type ParamsService = {
     params: Params;
-    locals: any;
+    locals: Locals;
   };
 
   export interface Response {

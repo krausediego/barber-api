@@ -13,6 +13,7 @@ export namespace Http {
     code?: number;
     body?: any;
     cookie?: CookieProps;
+    clearCookie?: string;
   }
 
   export interface CookieProps {

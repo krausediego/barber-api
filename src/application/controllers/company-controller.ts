@@ -21,11 +21,24 @@ export class CompanyController implements Controller {
     params,
     locals,
   }: ICreateCompany.ParamsService): Promise<Http.Response> {
-    const content = await (this.service() as ICreateCompany).run({
+    const { company, token } = await (this.service() as ICreateCompany).run({
       ...params,
+      userId: locals?.user?.sub as string,
       traceId: locals?.traceId,
     });
 
-    return ok({ ...content });
+    return ok(
+      { company },
+      {
+        name: 'token',
+        val: token,
+        options: {
+          httpOnly: true,
+          maxAge: 7 * 86400000,
+          path: '/',
+        },
+      },
+      'token',
+    );
   }
 }

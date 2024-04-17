@@ -1,12 +1,16 @@
 import { IAuth, IAuthSignIn, IAuthSignUp } from '@/domain/interfaces/services';
 import { AuthSignInService, AuthSignUpService } from '@/domain/services';
-import { makeUsersRepository } from '@/main/factories/domain/repositories';
+import {
+  makeCompaniesUsersRepository,
+  makeUsersRepository,
+} from '@/main/factories/domain/repositories';
 import { makeHash, makeLogging, makeToken } from '@/main/factories/infra';
 
 const authSignIn = (): IAuthSignIn => {
   return new AuthSignInService(
     makeLogging(),
     makeUsersRepository(),
+    makeCompaniesUsersRepository(),
     makeHash(),
     makeToken(),
   );

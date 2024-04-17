@@ -1,3 +1,4 @@
+import { Locals } from '@/application/interfaces';
 import { ICompaniesAddressesRepository } from '@/domain/interfaces';
 
 export interface ICreateCompanyAddress {
@@ -13,7 +14,7 @@ export namespace ICreateCompanyAddress {
 
   export type ParamsService = {
     params: Params;
-    locals: any;
+    locals: Locals;
   };
 
   export interface Response {

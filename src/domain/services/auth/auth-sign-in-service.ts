@@ -5,6 +5,7 @@ import {
   LoggingManager,
   IHashManager,
   IToken,
+  ICompaniesUsersRepository,
 } from '@/domain/interfaces';
 import { IAuthSignIn } from '@/domain/interfaces/services/auth';
 
@@ -12,6 +13,7 @@ export class AuthSignInService extends BaseService implements IAuthSignIn {
   constructor(
     protected readonly logger: LoggingManager,
     private readonly usersRepository: IUsersRepository,
+    private readonly companiesUsersRepository: ICompaniesUsersRepository,
     private readonly hashManager: IHashManager,
     private readonly token: IToken,
   ) {
@@ -49,9 +51,20 @@ export class AuthSignInService extends BaseService implements IAuthSignIn {
       throw new UnauthorizedError('Email or password is invalid');
     }
 
+    this.log('info', 'Find company with user');
+
+    const companyWithUser = await this.companiesUsersRepository.findByUserId({
+      userId: userExists.id,
+    });
+
+    if (!companyWithUser) {
+      this.log('debug', 'User not found in company users.');
+    }
+
     this.log('debug', 'Generate token, and return to client requested.');
 
     const token = this.token.generateToken(userExists.id, {
+      companyId: companyWithUser?.companyId ?? undefined,
       role: userExists.role,
     });
 

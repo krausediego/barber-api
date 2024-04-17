@@ -1,3 +1,4 @@
+import { Locals } from '@/application/interfaces';
 import { IOperationsTimesRepository } from '@/domain/interfaces';
 
 export interface ICreateOperationTime {
@@ -13,7 +14,7 @@ export namespace ICreateOperationTime {
 
   export type ParamsService = {
     params: Params;
-    locals: any;
+    locals: Locals;
   };
 
   export interface Response {

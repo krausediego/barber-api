@@ -1,13 +1,20 @@
 import { ICompany, ICreateCompany } from '@/domain/interfaces/services';
 import { CreateCompanyService } from '@/domain/services';
-import { makeCompaniesRepository } from '@/main/factories/domain/repositories';
-import { makeGCPStorage, makeLogging } from '@/main/factories/infra';
+import {
+  makeCompaniesRepository,
+  makeCompaniesUsersRepository,
+  makeUsersRepository,
+} from '@/main/factories/domain/repositories';
+import { makeGCPStorage, makeLogging, makeToken } from '@/main/factories/infra';
 
 const createCompany = (): ICreateCompany => {
   return new CreateCompanyService(
     makeLogging(),
     makeCompaniesRepository(),
+    makeCompaniesUsersRepository(),
+    makeUsersRepository(),
     makeGCPStorage(),
+    makeToken(),
   );
 };
 

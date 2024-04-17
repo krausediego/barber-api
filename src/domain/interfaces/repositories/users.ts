@@ -6,6 +6,10 @@ export interface IUsersRepository {
   findByIdUser(
     data: IUsersRepository.FindById,
   ): Promise<IUsersRepository.User | null>;
+  update(
+    id: string,
+    data: IUsersRepository.UpdateUser,
+  ): Promise<IUsersRepository.User>;
 }
 
 export namespace IUsersRepository {
@@ -21,6 +25,10 @@ export namespace IUsersRepository {
   export interface CreateUser {
     email: string;
     password: string;
+    role?: 'EMPLOYEE' | 'ADMIN';
+  }
+
+  export interface UpdateUser {
     role?: 'EMPLOYEE' | 'ADMIN';
   }
 

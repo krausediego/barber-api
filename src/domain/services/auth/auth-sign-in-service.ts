@@ -51,7 +51,9 @@ export class AuthSignInService extends BaseService implements IAuthSignIn {
 
     this.log('debug', 'Generate token, and return to client requested.');
 
-    const token = this.token.generateToken('a');
+    const token = this.token.generateToken(userExists.id, {
+      role: userExists.role,
+    });
 
     this.log('debug', 'Finish process sign-in.');
 

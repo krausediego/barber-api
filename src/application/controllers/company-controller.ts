@@ -21,14 +21,8 @@ export class CompanyController implements Controller {
     params,
     locals,
   }: ICreateCompany.ParamsService): Promise<Http.Response> {
-    const { name, logo, description, types, cnpj } = params;
-
     const content = await (this.service() as ICreateCompany).run({
-      name,
-      logo,
-      description,
-      types,
-      cnpj,
+      ...params,
       traceId: locals?.traceId,
     });
 

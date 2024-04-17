@@ -25,8 +25,8 @@ export class OperationTimeController implements Controller {
     locals,
   }: ICreateOperationTime.ParamsService): Promise<Http.Response> {
     const content = await (this.service() as ICreateOperationTime).run({
-      traceId: locals?.traceId,
       ...params,
+      traceId: locals?.traceId,
     });
 
     return ok({ ...content });

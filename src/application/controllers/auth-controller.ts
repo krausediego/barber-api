@@ -21,11 +21,8 @@ export class AuthController implements Controller {
     params,
     locals,
   }: IAuthSignIn.ParamsService): Promise<Http.Response> {
-    const { email, password } = params;
-
     const { token } = await (this.service() as IAuthSignIn).run({
-      email,
-      password,
+      ...params,
       traceId: locals?.traceId,
     });
 
@@ -44,12 +41,8 @@ export class AuthController implements Controller {
     params,
     locals,
   }: IAuthSignUp.ParamsService): Promise<Http.Response> {
-    const { email, password, role } = params;
-
     await (this.service() as IAuthSignUp).run({
-      email,
-      password,
-      role,
+      ...params,
       traceId: locals?.traceId,
     });
 

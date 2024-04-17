@@ -28,7 +28,7 @@ describe('UserProfileControllerCreateUserProfile', () => {
       method: 'POST',
       path: '/api',
       data: { ...params },
-      locals: { traceId: 'trace-id' },
+      locals: { traceId: 'trace-id', user: { sub: 'abc' } },
     };
 
     response = {

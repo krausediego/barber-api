@@ -17,7 +17,7 @@ export namespace IUsersProfilesRepository {
     specialties: SpecialtyTypes[];
     userId: string;
     createdAt: Date;
-    updatedAt: Date;
+    updatedAt: Date | null;
   }
 
   export interface CreateUserProfileService {

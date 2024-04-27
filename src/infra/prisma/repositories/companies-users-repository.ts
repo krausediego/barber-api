@@ -16,4 +16,33 @@ export class CompaniesUsersRepository implements ICompaniesUsersRepository {
       .getPrisma()
       .companyUser.findUnique({ where: { userId } });
   }
+
+  async findAllByCompanyId({
+    userId,
+    companyId,
+  }: ICompaniesUsersRepository.FindAllByCompanyId): Promise<
+    ICompaniesUsersRepository.FindAllByCompanyIdResponse[] | null
+  > {
+    return this.prismaManager.getPrisma().companyUser.findMany({
+      where: {
+        companyId,
+        AND: [{ NOT: { userId } }],
+      },
+      select: {
+        createdAt: true,
+        user: {
+          select: {
+            email: true,
+            UserProfile: {
+              select: {
+                name: true,
+                avatarUrl: true,
+                specialties: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  }
 }

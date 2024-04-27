@@ -17,10 +17,9 @@ export class AuthClientMiddleware extends BaseService implements Middleware {
 
   async handle({ data, locals }: Http.Request<Params>): Promise<Http.Response> {
     try {
-      const { traceId } = locals;
       const { token } = data;
 
-      this.traceId = traceId;
+      this.traceId = locals?.traceId;
 
       this.log('info', 'Start process validate client token.');
 

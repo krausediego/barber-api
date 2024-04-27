@@ -1,11 +1,13 @@
 import { CookieOptions } from 'express';
 
+import { Locals } from '@/application/interfaces';
+
 export namespace Http {
   export interface Request<Data = any> {
     method: string;
     path: string;
     data: Data;
-    locals?: any;
+    locals: Locals;
   }
 
   export interface Response {

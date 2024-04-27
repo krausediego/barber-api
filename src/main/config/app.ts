@@ -1,6 +1,6 @@
 import 'express-async-errors';
-import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import express from 'express';
 import { readdirSync } from 'fs';
 import { Server } from 'http';
@@ -26,8 +26,12 @@ export class App {
 
   setupEnvironments(): App {
     this.app.use(express.json());
-    // this.app.use(bodyParser.urlencoded());
-    // this.app.use(bodyParser.json());
+    this.app.use(
+      cors({
+        origin: 'http://localhost:3000',
+        credentials: true,
+      }),
+    );
     this.app.use(cookieParser());
 
     return this;

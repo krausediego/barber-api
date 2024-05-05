@@ -1,5 +1,14 @@
-import { IAuth, IAuthSignIn, IAuthSignUp } from '@/domain/interfaces/services';
-import { AuthSignInService, AuthSignUpService } from '@/domain/services';
+import {
+  IAuth,
+  IAuthSignIn,
+  IAuthSignOut,
+  IAuthSignUp,
+} from '@/domain/interfaces/services';
+import {
+  AuthSignInService,
+  AuthSignOutService,
+  AuthSignUpService,
+} from '@/domain/services';
 import {
   makeCompaniesUsersRepository,
   makeUsersRepository,
@@ -24,9 +33,14 @@ const authSignUp = (): IAuthSignUp => {
   );
 };
 
+const authSignOut = (): IAuthSignOut => {
+  return new AuthSignOutService(makeLogging());
+};
+
 const services = {
   authSignIn,
   authSignUp,
+  authSignOut,
 };
 
 export const makeAuthService = (

@@ -1,6 +1,11 @@
 import { getHttpError, noContent } from '@/application/helpers';
 import { Controller, Http } from '@/application/interfaces';
-import { IAuth, IAuthSignIn, IAuthSignUp } from '@/domain/interfaces/services';
+import {
+  IAuth,
+  IAuthSignIn,
+  IAuthSignOut,
+  IAuthSignUp,
+} from '@/domain/interfaces/services';
 
 export class AuthController implements Controller {
   constructor(
@@ -47,5 +52,16 @@ export class AuthController implements Controller {
     });
 
     return noContent();
+  }
+
+  private async authSignOut({
+    locals,
+  }: IAuthSignOut.ParamsService): Promise<Http.Response> {
+    await (this.service() as IAuthSignOut).run({
+      sub: locals?.user?.sub,
+      traceId: locals?.traceId,
+    });
+
+    return noContent(undefined, 'token');
   }
 }

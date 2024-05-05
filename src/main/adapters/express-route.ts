@@ -25,6 +25,10 @@ export const adaptRoute = (controller: Controller) => {
       locals: req.locals,
     });
 
+    if (httpResponse.clearCookie) {
+      res.clearCookie(httpResponse.clearCookie);
+    }
+
     if (
       httpResponse.statusCode >= 200 &&
       httpResponse.statusCode <= 299 &&
@@ -37,10 +41,6 @@ export const adaptRoute = (controller: Controller) => {
       httpResponse.cookie
     ) {
       const { name, val, options } = httpResponse.cookie;
-
-      if (httpResponse.clearCookie) {
-        res.clearCookie(httpResponse.clearCookie);
-      }
 
       res.status(httpResponse.statusCode).cookie(name, val, options).send();
     } else if (httpResponse?.body instanceof Error) {

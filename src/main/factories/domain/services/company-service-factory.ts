@@ -1,5 +1,9 @@
-import { ICompany, ICreateCompany } from '@/domain/interfaces/services';
-import { CreateCompanyService } from '@/domain/services';
+import {
+  ICompany,
+  ICreateCompany,
+  IFindCompany,
+} from '@/domain/interfaces/services';
+import { CreateCompanyService, FindCompanyService } from '@/domain/services';
 import {
   makeCompaniesRepository,
   makeCompaniesUsersRepository,
@@ -18,8 +22,13 @@ const createCompany = (): ICreateCompany => {
   );
 };
 
+const findCompany = (): IFindCompany => {
+  return new FindCompanyService(makeLogging(), makeCompaniesRepository());
+};
+
 const services = {
   createCompany,
+  findCompany,
 };
 
 export const makeCompanyService = (

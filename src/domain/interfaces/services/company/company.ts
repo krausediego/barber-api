@@ -1,7 +1,7 @@
-import { ICreateCompany } from './create-company';
+import { ICreateCompany, IFindCompany } from '.';
 
 export namespace ICompany {
-  export type CompanyServicesNames = 'createCompany';
+  export type CompanyServicesNames = 'createCompany' | 'findCompany';
 
-  export type CompanyServices = () => ICreateCompany;
+  export type CompanyServices = () => ICreateCompany | IFindCompany;
 }

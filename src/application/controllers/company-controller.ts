@@ -1,6 +1,10 @@
 import { getHttpError, ok } from '@/application/helpers';
 import { Controller, Http } from '@/application/interfaces';
-import { ICompany, ICreateCompany } from '@/domain/interfaces/services';
+import {
+  ICompany,
+  ICreateCompany,
+  IFindCompany,
+} from '@/domain/interfaces/services';
 
 export class CompanyController implements Controller {
   constructor(
@@ -40,5 +44,16 @@ export class CompanyController implements Controller {
       },
       'token',
     );
+  }
+
+  private async findCompany({
+    locals,
+  }: IFindCompany.ParamsService): Promise<Http.Response> {
+    const company = await (this.service() as IFindCompany).run({
+      companyId: locals?.user?.companyId as string,
+      traceId: locals.traceId,
+    });
+
+    return ok({ ...company });
   }
 }

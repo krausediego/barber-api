@@ -4,7 +4,7 @@ import multer from 'multer';
 import { createCompanyValidateSchema } from '@/domain/schemas';
 import { adaptRoute } from '@/main/adapters';
 import { makeCompanyController } from '@/main/factories/application/controllers';
-import { validateRequest, authClient } from '@/main/middlewares';
+import { validateRequest, authClient, validateRole } from '@/main/middlewares';
 
 const upload = multer();
 
@@ -15,5 +15,12 @@ export default (router: Router): void => {
     upload.single('logo'),
     validateRequest(createCompanyValidateSchema),
     adaptRoute(makeCompanyController('createCompany')),
+  );
+
+  router.get(
+    '/company/find',
+    authClient,
+    validateRole,
+    adaptRoute(makeCompanyController('findCompany')),
   );
 };

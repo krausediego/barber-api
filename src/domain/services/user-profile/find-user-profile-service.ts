@@ -38,6 +38,6 @@ export class FindUserProfileService
 
     this.log('info', 'Finish process.');
 
-    return { userProfile };
+    return { ...userProfile };
   }
 }

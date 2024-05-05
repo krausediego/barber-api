@@ -11,9 +11,17 @@ export class UsersProfilesRepository implements IUsersProfilesRepository {
 
   async findByUserId({
     userId,
-  }: IUsersProfilesRepository.FindByIdUserId): Promise<IUsersProfilesRepository.UserProfile | null> {
-    return this.prismaManager
-      .getPrisma()
-      .userProfile.findUnique({ where: { userId } });
+  }: IUsersProfilesRepository.FindByIdUserId): Promise<IUsersProfilesRepository.FindByUserIdResponse | null> {
+    return this.prismaManager.getPrisma().userProfile.findUnique({
+      where: { userId },
+      include: {
+        user: {
+          select: {
+            email: true,
+            role: true,
+          },
+        },
+      },
+    });
   }
 }

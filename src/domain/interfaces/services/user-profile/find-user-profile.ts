@@ -16,7 +16,5 @@ export namespace IFindUserProfile {
     locals: Locals;
   };
 
-  export interface Response {
-    userProfile: IUsersProfilesRepository.UserProfile;
-  }
+  export type Response = IUsersProfilesRepository.UserProfile;
 }

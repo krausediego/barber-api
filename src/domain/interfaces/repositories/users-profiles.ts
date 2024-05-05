@@ -6,7 +6,7 @@ export interface IUsersProfilesRepository {
   ): Promise<IUsersProfilesRepository.UserProfile>;
   findByUserId(
     data: IUsersProfilesRepository.FindByIdUserId,
-  ): Promise<IUsersProfilesRepository.UserProfile | null>;
+  ): Promise<IUsersProfilesRepository.FindByUserIdResponse | null>;
 }
 
 export namespace IUsersProfilesRepository {
@@ -29,6 +29,13 @@ export namespace IUsersProfilesRepository {
     };
     specialties: SpecialtyTypes | SpecialtyTypes[];
     userId: string;
+  }
+
+  export interface FindByUserIdResponse extends UserProfile {
+    user: {
+      email: string;
+      role: 'EMPLOYEE' | 'ADMIN';
+    };
   }
 
   export interface CreateUserProfile {

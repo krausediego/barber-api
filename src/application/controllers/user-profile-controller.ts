@@ -27,7 +27,7 @@ export class UserProfileController implements Controller {
   }: ICreateUserProfile.ParamsService): Promise<Http.Response> {
     const content = await (this.service() as ICreateUserProfile).run({
       ...params,
-      userId: locals?.user?.sub,
+      userId: locals?.user?.sub as string,
       traceId: locals?.traceId,
     });
 
@@ -38,7 +38,7 @@ export class UserProfileController implements Controller {
     locals,
   }: IFindUserProfile.ParamsService): Promise<Http.Response> {
     const content = await (this.service() as IFindUserProfile).run({
-      userId: locals?.user?.sub,
+      userId: locals?.user?.sub as string,
       traceId: locals?.traceId,
     });
 

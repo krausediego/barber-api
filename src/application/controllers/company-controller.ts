@@ -1,9 +1,10 @@
-import { getHttpError, ok } from '@/application/helpers';
+import { getHttpError, noContent, ok } from '@/application/helpers';
 import { Controller, Http } from '@/application/interfaces';
 import {
   ICompany,
   ICreateCompany,
   IFindCompany,
+  IUpdateCompany,
 } from '@/domain/interfaces/services';
 
 export class CompanyController implements Controller {
@@ -44,6 +45,20 @@ export class CompanyController implements Controller {
       },
       'token',
     );
+  }
+
+  private async updateCompany({
+    params,
+    locals,
+  }: IUpdateCompany.ParamsService): Promise<Http.Response> {
+    console.log('chegou no update', params);
+    await (this.service() as IUpdateCompany).run({
+      ...params,
+      traceId: locals.traceId,
+      companyId: locals?.user?.companyId as string,
+    });
+
+    return noContent();
   }
 
   private async findCompany({

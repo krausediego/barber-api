@@ -17,6 +17,14 @@ export default (router: Router): void => {
     adaptRoute(makeCompanyController('createCompany')),
   );
 
+  router.put(
+    '/company/update',
+    authClient,
+    upload.single('logo'),
+    validateRole,
+    adaptRoute(makeCompanyController('updateCompany')),
+  );
+
   router.get(
     '/company/find',
     authClient,

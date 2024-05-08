@@ -21,4 +21,11 @@ export class GCPStorage implements IGCPStorage {
 
     return `https://storage.googleapis.com/${bucketName}/${fileName}`;
   }
+
+  async deleteFile({
+    bucketname,
+    fileName,
+  }: IGCPStorage.DeleteFile): Promise<void> {
+    await this.gcpStorage.bucket(bucketname).file(fileName).delete();
+  }
 }

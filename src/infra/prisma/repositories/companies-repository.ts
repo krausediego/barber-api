@@ -9,6 +9,15 @@ export class CompaniesRepository implements ICompaniesRepository {
     return this.prismaManager.getPrisma().company.create({ data });
   }
 
+  async update({
+    id,
+    ...data
+  }: ICompaniesRepository.UpdateCompany): Promise<void> {
+    await this.prismaManager
+      .getPrisma()
+      .company.update({ data, where: { id } });
+  }
+
   async findByCnpj({
     cnpj,
   }: ICompaniesRepository.FindByCnpj): Promise<ICompaniesRepository.Company | null> {

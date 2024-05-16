@@ -52,7 +52,7 @@
     "lint-staged": "^15.2.2",
     "pino-pretty": "^11.0.0",
     "prettier": "^3.2.5",
-    "prisma": "^5.12.1",
+    "prisma": "^5.13.0",
     "redoc-cli": "^0.13.21",
     "supertest": "^6.3.4",
     "ts-jest": "^29.1.2",
@@ -63,7 +63,7 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^7.9.0",
-    "@prisma/client": "^5.12.1",
+    "@prisma/client": "^5.13.0",
     "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",

@@ -9,3 +9,4 @@ services:
       - POSTGRESQL_USERNAME=admin
       - POSTGRESQL_PASSWORD=admin
       - POSTGRESQL_DATABASE=barber_api
+      - TZ=GMT-3

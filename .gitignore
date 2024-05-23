@@ -5,6 +5,7 @@
 ### dotenv ###
 .env*
 !.env.example
+.yarn
 
 ### Linux ###
 *~

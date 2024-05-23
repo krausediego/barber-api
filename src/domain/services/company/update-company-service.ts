@@ -2,7 +2,7 @@ import { NotFoundError } from '@/application/errors';
 import { BaseService } from '@/application/helpers';
 import {
   ICompaniesRepository,
-  IGCPStorage,
+  IManageStorage,
   IUpdateCompany,
   LoggingManager,
 } from '@/domain/interfaces';
@@ -14,7 +14,7 @@ export class UpdateCompanyService
   constructor(
     protected readonly logger: LoggingManager,
     private readonly companiesRepository: ICompaniesRepository,
-    private readonly gcpStorage: IGCPStorage,
+    private readonly storage: IManageStorage,
   ) {
     super(logger);
   }
@@ -38,18 +38,19 @@ export class UpdateCompanyService
 
     let logoUrl;
     if (logo) {
-      logoUrl = await this.gcpStorage.uploadFile({
-        bucketName: 'barber_api_companies_logos',
-        fileName: `${new Date().getTime()}_${logo.fileName}`,
-        buffer: logo.buffer,
-        mimetype: logo.mimetype,
+      const { fileUrl } = await this.storage.upload({
+        bucketName: 'companies_logos',
+        path: `${new Date().getTime()}_${props.name?.replace(/\s/g, '')}_${logo.fileName?.replace(/\s/g, '')}`,
+        fileBody: logo.buffer,
+        contentType: logo.mimetype,
       });
+      logoUrl = fileUrl;
 
-      const fileName = company.logoUrl.split('/').pop() as string;
+      const fileName = company?.logoUrl.split('/').pop() as string;
 
-      await this.gcpStorage.deleteFile({
-        bucketname: 'barber_api_companies_logos',
-        fileName,
+      await this.storage.delete({
+        bucketName: 'companies_logos',
+        fileName: [fileName],
       });
     }
 

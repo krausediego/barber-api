@@ -14,7 +14,11 @@ import {
   makeCompaniesUsersRepository,
   makeUsersRepository,
 } from '@/main/factories/domain/repositories';
-import { makeGCPStorage, makeLogging, makeToken } from '@/main/factories/infra';
+import {
+  makeSupabaseStorageFactory,
+  makeLogging,
+  makeToken,
+} from '@/main/factories/infra';
 
 const createCompany = (): ICreateCompany => {
   return new CreateCompanyService(
@@ -22,7 +26,7 @@ const createCompany = (): ICreateCompany => {
     makeCompaniesRepository(),
     makeCompaniesUsersRepository(),
     makeUsersRepository(),
-    makeGCPStorage(),
+    makeSupabaseStorageFactory(),
     makeToken(),
   );
 };
@@ -31,7 +35,7 @@ const updateCompany = (): IUpdateCompany => {
   return new UpdateCompanyService(
     makeLogging(),
     makeCompaniesRepository(),
-    makeGCPStorage(),
+    makeSupabaseStorageFactory(),
   );
 };
 

@@ -11,14 +11,17 @@ import {
   makeUsersProfilesRepository,
   makeUsersRepository,
 } from '@/main/factories/domain/repositories';
-import { makeGCPStorage, makeLogging } from '@/main/factories/infra';
+import {
+  makeSupabaseStorageFactory,
+  makeLogging,
+} from '@/main/factories/infra';
 
 const createUserProfile = (): ICreateUserProfile => {
   return new CreateUserProfileService(
     makeLogging(),
     makeUsersProfilesRepository(),
     makeUsersRepository(),
-    makeGCPStorage(),
+    makeSupabaseStorageFactory(),
   );
 };
 

@@ -51,7 +51,6 @@ export class CompanyController implements Controller {
     params,
     locals,
   }: IUpdateCompany.ParamsService): Promise<Http.Response> {
-    console.log('chegou no update', params);
     await (this.service() as IUpdateCompany).run({
       ...params,
       traceId: locals.traceId,

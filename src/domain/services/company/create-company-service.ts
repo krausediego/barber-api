@@ -4,7 +4,7 @@ import {
   ICompaniesRepository,
   ICompaniesUsersRepository,
   ICreateCompany,
-  IGCPStorage,
+  IManageStorage,
   IToken,
   IUsersRepository,
   LoggingManager,
@@ -19,7 +19,7 @@ export class CreateCompanyService
     private readonly companiesRepository: ICompaniesRepository,
     private readonly companiesUsersRepository: ICompaniesUsersRepository,
     private readonly usersRepository: IUsersRepository,
-    private readonly gcpStorage: IGCPStorage,
+    private readonly storage: IManageStorage,
     private readonly token: IToken,
   ) {
     super(logger);
@@ -30,8 +30,6 @@ export class CreateCompanyService
     userId,
     ...props
   }: ICreateCompany.Params): Promise<ICreateCompany.Response> {
-    const { fileName, buffer, mimetype } = props.logo;
-
     this.traceId = traceId;
 
     this.log('info', 'Start process create company.');
@@ -47,23 +45,25 @@ export class CreateCompanyService
       throw new ConflictError('Company already exists.');
     }
 
-    this.log('info', 'Sending logo to GCP bucket.');
-
-    const logoUrl = await this.gcpStorage.uploadFile({
-      bucketName: 'barber_api_companies_logos',
-      fileName: `${new Date().getTime()}_${fileName}`,
-      buffer,
-      mimetype,
+    this.log('info', 'Sending logo to GCP bucket.', {
+      type: props.logo.mimetype,
     });
 
-    this.log('info', 'Sending logo successfully.', { logoUrl });
+    const { fileUrl } = await this.storage.upload({
+      bucketName: 'companies_logos',
+      path: `${new Date().getTime()}_${props.name.replace(/\s/g, '')}_${props.logo.fileName.replace(/\s/g, '')}`,
+      fileBody: props.logo.buffer,
+      contentType: props.logo.mimetype,
+    });
+
+    this.log('info', 'Sending logo successfully.', { fileUrl });
 
     this.log('info', 'Create company in database.');
 
     const company = await this.companiesRepository.create({
       name: props.name,
       description: props.description,
-      logoUrl,
+      logoUrl: fileUrl,
       types: typeof props.types === 'object' ? props.types : Array(props.types),
       cnpj: props.cnpj,
     });

@@ -2,7 +2,7 @@ import { ConflictError, NotFoundError } from '@/application/errors';
 import { BaseService } from '@/application/helpers';
 import {
   ICreateUserProfile,
-  IGCPStorage,
+  IManageStorage,
   IUsersProfilesRepository,
   IUsersRepository,
   LoggingManager,
@@ -16,7 +16,7 @@ export class CreateUserProfileService
     protected readonly logger: LoggingManager,
     private readonly usersProfilesRepository: IUsersProfilesRepository,
     private readonly usersRepository: IUsersRepository,
-    private readonly gcpStorage: IGCPStorage,
+    private readonly storage: IManageStorage,
   ) {
     super(logger);
   }
@@ -25,8 +25,6 @@ export class CreateUserProfileService
     traceId,
     ...props
   }: ICreateUserProfile.Params): Promise<ICreateUserProfile.Response> {
-    const { fileName, buffer, mimetype } = props.avatar;
-
     this.traceId = traceId;
 
     this.log('info', 'Start process create user profile.');
@@ -52,21 +50,21 @@ export class CreateUserProfileService
 
     this.log('info', 'Try send avatar to GCP bucket.');
 
-    const avatarUrl = await this.gcpStorage.uploadFile({
-      bucketName: 'barber_api_profile_avatar',
-      fileName: `${new Date().getTime()}_${fileName}`,
-      buffer,
-      mimetype,
+    const { fileUrl } = await this.storage.upload({
+      bucketName: 'users_avatars',
+      path: `${new Date().getTime()}_${props.name.replace(/\s/g, '')}_${props.avatar.fileName.replace(/\s/g, '')}`,
+      fileBody: props.avatar.buffer,
+      contentType: props.avatar.mimetype,
     });
 
-    this.log('info', 'Sending avatar successfully.', { avatarUrl });
+    this.log('info', 'Sending avatar successfully.', { fileUrl });
 
     this.log('info', 'Save user profile in database.');
 
     const userProfile = await this.usersProfilesRepository.create({
       name: props.name,
       userId: props.userId,
-      avatarUrl,
+      avatarUrl: fileUrl,
       specialties:
         typeof props.specialties === 'object'
           ? props.specialties

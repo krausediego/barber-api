@@ -64,6 +64,7 @@
   "dependencies": {
     "@google-cloud/storage": "^7.9.0",
     "@prisma/client": "^5.13.0",
+    "@supabase/supabase-js": "^2.43.2",
     "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",

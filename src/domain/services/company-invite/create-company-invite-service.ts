@@ -1,3 +1,4 @@
+import { BadRequestError } from '@/application/errors';
 import { BaseService } from '@/application/helpers';
 import {
   ICompaniesInvitesRepository,
@@ -25,6 +26,21 @@ export class CreateCompanyInviteService
     this.log('info', 'Start process create company invite.');
 
     this.log('info', 'Generate random code.');
+
+    const hasCompanyInvite =
+      await this.companiesInvitesRepository.countByCompanyId({
+        companyId: props.companyId,
+      });
+
+    if (hasCompanyInvite === 5) {
+      this.log(
+        'warn',
+        'You have reached the maximum of 5 active invitations, delete one to continue',
+      );
+      throw new BadRequestError(
+        'You have reached the maximum of 5 active invitations, delete one to continue',
+      );
+    }
 
     const code = this.generateCode();
 

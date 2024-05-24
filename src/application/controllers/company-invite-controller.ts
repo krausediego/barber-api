@@ -1,8 +1,10 @@
-import { getHttpError, ok } from '@/application/helpers';
+import { getHttpError, noContent, ok } from '@/application/helpers';
 import { Controller, Http } from '@/application/interfaces';
 import {
   ICompanyInvite,
   ICreateCompanyInvite,
+  IDeleteCompanyInvite,
+  IFindAllCompanyInvites,
   IValidateCompanyInvite,
 } from '@/domain/interfaces/services';
 
@@ -45,5 +47,28 @@ export class CompanyInviteController implements Controller {
     });
 
     return ok({ ...content });
+  }
+
+  private async findAllCompanyInvites({
+    locals,
+  }: IFindAllCompanyInvites.ParamsService): Promise<Http.Response> {
+    const content = await (this.service() as IFindAllCompanyInvites).run({
+      companyId: locals?.user?.companyId as string,
+      traceId: locals?.traceId,
+    });
+
+    return ok({ ...content });
+  }
+
+  private async deleteCompanyInvite({
+    params,
+    locals,
+  }: IDeleteCompanyInvite.ParamsService): Promise<Http.Response> {
+    await (this.service() as IDeleteCompanyInvite).run({
+      ...params,
+      traceId: locals?.traceId,
+    });
+
+    return noContent();
   }
 }

@@ -14,12 +14,13 @@ export class ValidateRequestMiddleware implements Middleware {
   async handle(
     request: Http.Request<IValidateMiddleware.Data>,
   ): Promise<Http.Response> {
-    const { body, params, schema } = request.data;
+    const { body, params, query, schema } = request.data;
 
     try {
       await schema.parse({
         ...body,
         ...params,
+        ...query,
       });
 
       return ok({ validated: true });

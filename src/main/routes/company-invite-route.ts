@@ -1,6 +1,9 @@
 import { Router } from 'express';
 
-import { validateCompanyInviteValidateSchema } from '@/domain/schemas';
+import {
+  deleteCompanyInviteValidateSchema,
+  validateCompanyInviteValidateSchema,
+} from '@/domain/schemas';
 import { adaptRoute } from '@/main/adapters';
 import { makeCompanyInviteController } from '@/main/factories/application/controllers';
 import { authClient, validateRequest, validateRole } from '@/main/middlewares';
@@ -18,5 +21,20 @@ export default (router: Router): void => {
     authClient,
     validateRequest(validateCompanyInviteValidateSchema),
     adaptRoute(makeCompanyInviteController('validateCompanyInvite')),
+  );
+
+  router.get(
+    '/company-invite/find-all',
+    authClient,
+    validateRole,
+    adaptRoute(makeCompanyInviteController('findAllCompanyInvites')),
+  );
+
+  router.delete(
+    '/company-invite/delete',
+    authClient,
+    validateRole,
+    validateRequest(deleteCompanyInviteValidateSchema),
+    adaptRoute(makeCompanyInviteController('deleteCompanyInvite')),
   );
 };

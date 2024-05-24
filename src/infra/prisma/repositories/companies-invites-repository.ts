@@ -25,4 +25,30 @@ export class CompaniesInvitesRepository implements ICompaniesInvitesRepository {
       .getPrisma()
       .companyInvites.delete({ where: { id } });
   }
+
+  async countByCompanyId({
+    companyId,
+  }: ICompaniesInvitesRepository.CountByCompanyId): Promise<number> {
+    return this.prismaManager
+      .getPrisma()
+      .companyInvites.count({ where: { companyId } });
+  }
+
+  async findAllCompanyInvitesByCompanyId({
+    companyId,
+  }: ICompaniesInvitesRepository.FindAllCompanyInvitesByCompanyId): Promise<
+    ICompaniesInvitesRepository.CompanyInvite[] | null
+  > {
+    return this.prismaManager
+      .getPrisma()
+      .companyInvites.findMany({ where: { companyId } });
+  }
+
+  async findById({
+    id,
+  }: ICompaniesInvitesRepository.FindById): Promise<ICompaniesInvitesRepository.CompanyInvite | null> {
+    return this.prismaManager
+      .getPrisma()
+      .companyInvites.findUnique({ where: { id } });
+  }
 }

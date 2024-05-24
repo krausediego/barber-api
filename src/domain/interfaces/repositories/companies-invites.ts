@@ -6,6 +6,15 @@ export interface ICompaniesInvitesRepository {
     data: ICompaniesInvitesRepository.FindByCode,
   ): Promise<ICompaniesInvitesRepository.CompanyInvite | null>;
   delete(data: ICompaniesInvitesRepository.Delete): Promise<void>;
+  countByCompanyId(
+    data: ICompaniesInvitesRepository.CountByCompanyId,
+  ): Promise<number | null>;
+  findAllCompanyInvitesByCompanyId(
+    data: ICompaniesInvitesRepository.FindAllCompanyInvitesByCompanyId,
+  ): Promise<ICompaniesInvitesRepository.CompanyInvite[] | null>;
+  findById(
+    data: ICompaniesInvitesRepository.FindById,
+  ): Promise<ICompaniesInvitesRepository.CompanyInvite | null>;
 }
 
 export namespace ICompaniesInvitesRepository {
@@ -24,6 +33,18 @@ export namespace ICompaniesInvitesRepository {
 
   export interface FindByCode {
     code: string;
+  }
+
+  export interface CountByCompanyId {
+    companyId: string;
+  }
+
+  export interface FindAllCompanyInvitesByCompanyId {
+    companyId: string;
+  }
+
+  export interface FindById {
+    id: string;
   }
 
   export interface Delete {

@@ -1,10 +1,14 @@
 import {
   ICompanyInvite,
   ICreateCompanyInvite,
+  IDeleteCompanyInvite,
+  IFindAllCompanyInvites,
   IValidateCompanyInvite,
 } from '@/domain/interfaces/services';
 import {
   CreateCompanyInviteService,
+  DeleteCompanyInviteService,
+  FindAllCompanyInvitesService,
   ValidateCompanyInviteService,
 } from '@/domain/services';
 import {
@@ -28,9 +32,25 @@ const validateCompanyInvite = (): IValidateCompanyInvite => {
   );
 };
 
+const findAllCompanyInvites = (): IFindAllCompanyInvites => {
+  return new FindAllCompanyInvitesService(
+    makeLogging(),
+    makeCompaniesInvitesRepository(),
+  );
+};
+
+const deleteCompanyInvite = (): IDeleteCompanyInvite => {
+  return new DeleteCompanyInviteService(
+    makeLogging(),
+    makeCompaniesInvitesRepository(),
+  );
+};
+
 const services = {
   createCompanyInvite,
   validateCompanyInvite,
+  findAllCompanyInvites,
+  deleteCompanyInvite,
 };
 
 export const makeCompanyInviteService = (

@@ -1,12 +1,20 @@
-import { ICreateCompanyInvite } from './create-company-invite';
-import { IValidateCompanyInvite } from './validate-company-invite';
+import {
+  ICreateCompanyInvite,
+  IDeleteCompanyInvite,
+  IFindAllCompanyInvites,
+  IValidateCompanyInvite,
+} from '.';
 
 export namespace ICompanyInvite {
   export type CompanyInviteServicesNames =
     | 'createCompanyInvite'
-    | 'validateCompanyInvite';
+    | 'validateCompanyInvite'
+    | 'findAllCompanyInvites'
+    | 'deleteCompanyInvite';
 
   export type CompanyInviteServices = () =>
     | ICreateCompanyInvite
-    | IValidateCompanyInvite;
+    | IValidateCompanyInvite
+    | IFindAllCompanyInvites
+    | IDeleteCompanyInvite;
 }

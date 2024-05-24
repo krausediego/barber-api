@@ -1,4 +1,4 @@
-import { ICreateOperationTime } from './create-operation-time';
+import { ICreateOperationTime } from '.';
 
 export namespace IOperationTime {
   export type OperationTimeServicesNames = 'createOperationTime';

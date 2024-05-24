@@ -1,5 +1,4 @@
-import { ICreateUserProfile } from './create-user-profile';
-import { IFindUserProfile } from './find-user-profile';
+import { ICreateUserProfile, IFindUserProfile } from '.';
 
 export namespace IUserProfile {
   export type UserProfileServicesNames =

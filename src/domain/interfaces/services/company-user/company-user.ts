@@ -1,4 +1,4 @@
-import { IFindAllUsersCompanyUser } from './find-all-users-company-user';
+import { IFindAllUsersCompanyUser } from '.';
 
 export namespace ICompanyUser {
   export type CompanyUserServicesNames = 'findAllUsersCompanyUser';

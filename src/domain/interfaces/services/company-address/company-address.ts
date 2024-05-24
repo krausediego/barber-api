@@ -1,4 +1,4 @@
-import { ICreateCompanyAddress } from './create-company-address';
+import { ICreateCompanyAddress } from '.';
 
 export namespace ICompanyAddress {
   export type CompanyAddressServicesNames = 'createCompanyAddress';

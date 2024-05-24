@@ -8,9 +8,11 @@ import { validateRequest, authClient } from '@/main/middlewares';
 
 const upload = multer();
 
+const routePrefix = '/user-profile';
+
 export default (router: Router): void => {
   router.post(
-    '/user-profile/create',
+    `${routePrefix}/create`,
     authClient,
     upload.single('avatar'),
     validateRequest(createUserProfileValidateSchema),
@@ -18,7 +20,7 @@ export default (router: Router): void => {
   );
 
   router.get(
-    '/user-profile/find',
+    `${routePrefix}/find`,
     authClient,
     adaptRoute(makeUserProfileController('findUserProfile')),
   );

@@ -1,6 +1,4 @@
-import { IAuthSignIn } from './auth-sign-in';
-import { IAuthSignOut } from './auth-sign-out';
-import { IAuthSignUp } from './auth-sign-up';
+import { IAuthSignIn, IAuthSignOut, IAuthSignUp } from '.';
 
 export namespace IAuth {
   export type AuthServicesNames = 'authSignIn' | 'authSignUp' | 'authSignOut';

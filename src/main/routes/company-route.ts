@@ -8,9 +8,11 @@ import { validateRequest, authClient, validateRole } from '@/main/middlewares';
 
 const upload = multer();
 
+const routePrefix = '/company';
+
 export default (router: Router): void => {
   router.post(
-    '/company/create',
+    `${routePrefix}/create`,
     authClient,
     upload.single('logo'),
     validateRequest(createCompanyValidateSchema),
@@ -18,7 +20,7 @@ export default (router: Router): void => {
   );
 
   router.put(
-    '/company/update',
+    `${routePrefix}/update`,
     authClient,
     upload.single('logo'),
     validateRole,
@@ -26,7 +28,7 @@ export default (router: Router): void => {
   );
 
   router.get(
-    '/company/find',
+    `${routePrefix}/find`,
     authClient,
     validateRole,
     adaptRoute(makeCompanyController('findCompany')),

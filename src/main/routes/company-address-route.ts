@@ -5,9 +5,11 @@ import { adaptRoute } from '@/main/adapters';
 import { makeCompanyAddressController } from '@/main/factories/application/controllers';
 import { validateRequest, authClient } from '@/main/middlewares';
 
+const routePrefix = '/company-address';
+
 export default (router: Router): void => {
   router.post(
-    '/company-address/create',
+    `${routePrefix}/create`,
     authClient,
     validateRequest(createCompanyAddressValidateSchema),
     adaptRoute(makeCompanyAddressController('createCompanyAddress')),

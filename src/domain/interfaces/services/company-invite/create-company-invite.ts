@@ -17,7 +17,5 @@ export namespace ICreateCompanyInvite {
     locals: Locals;
   };
 
-  export interface Response {
-    companyInvite: ICompaniesInvitesRepository.CompanyInvite;
-  }
+  export type Response = ICompaniesInvitesRepository.CompanyInvite;
 }

@@ -39,6 +39,7 @@ export class CreateCompanyInviteService
       );
       throw new BadRequestError(
         'You have reached the maximum of 5 active invitations, delete one to continue',
+        1,
       );
     }
 
@@ -53,7 +54,7 @@ export class CreateCompanyInviteService
 
     this.log('info', 'Finish process.');
 
-    return { companyInvite };
+    return { ...companyInvite };
   }
 
   private generateCode() {

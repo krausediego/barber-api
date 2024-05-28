@@ -19,6 +19,6 @@ export namespace IFindAllCompanyInvites {
   };
 
   export type Response = {
-    companiesInvites: ICompaniesInvitesRepository.CompanyInvite[] | null;
+    companyInvites: ICompaniesInvitesRepository.CompanyInvite[] | null;
   };
 }

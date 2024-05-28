@@ -18,13 +18,13 @@ export default (router: Router): void => {
   );
 
   router.post(
-    `${routePrefix}/auth/sign-up`,
+    `${routePrefix}/sign-up`,
     validateRequest(authSignUpValidateSchema),
     adaptRoute(makeAuthController('authSignUp')),
   );
 
   router.post(
-    `${routePrefix}/auth/sign-out`,
+    `${routePrefix}/sign-out`,
     authClient,
     adaptRoute(makeAuthController('authSignOut')),
   );

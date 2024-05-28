@@ -24,13 +24,13 @@ export class FindAllCompanyInvitesService
 
     this.log('info', 'Start process find all company invites.');
 
-    const companiesInvites =
+    const companyInvites =
       await this.companiesInvitesRepository.findAllCompanyInvitesByCompanyId({
         companyId,
       });
 
     this.log('info', 'Finish process.');
 
-    return { companiesInvites };
+    return { companyInvites };
   }
 }

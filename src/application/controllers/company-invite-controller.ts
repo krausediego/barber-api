@@ -65,7 +65,8 @@ export class CompanyInviteController implements Controller {
     locals,
   }: IDeleteCompanyInvite.ParamsService): Promise<Http.Response> {
     await (this.service() as IDeleteCompanyInvite).run({
-      ...params,
+      id: Number(params.id),
+      companyId: locals?.user?.companyId as string,
       traceId: locals?.traceId,
     });
 

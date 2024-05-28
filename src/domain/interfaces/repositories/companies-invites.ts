@@ -19,7 +19,7 @@ export interface ICompaniesInvitesRepository {
 
 export namespace ICompaniesInvitesRepository {
   export interface CompanyInvite {
-    id: string;
+    id: number;
     code: string;
     companyId: string;
     createdAt: Date;
@@ -44,10 +44,10 @@ export namespace ICompaniesInvitesRepository {
   }
 
   export interface FindById {
-    id: string;
+    id: number;
   }
 
   export interface Delete {
-    id: string;
+    id: number;
   }
 }

@@ -6,7 +6,7 @@ export interface IDeleteCompanyInvite {
 
 export namespace IDeleteCompanyInvite {
   export type Params = {
-    id: string;
+    id: number;
     companyId: string;
     traceId?: string;
   };

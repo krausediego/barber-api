@@ -2,10 +2,12 @@ import {
   IUserProfile,
   ICreateUserProfile,
   IFindUserProfile,
+  IUpdateUserProfile,
 } from '@/domain/interfaces/services';
 import {
   CreateUserProfileService,
   FindUserProfileService,
+  UpdateUserProfileService,
 } from '@/domain/services';
 import {
   makeUsersProfilesRepository,
@@ -32,9 +34,18 @@ const findUserProfile = (): IFindUserProfile => {
   );
 };
 
+const updateUserProfile = (): IUpdateUserProfile => {
+  return new UpdateUserProfileService(
+    makeLogging(),
+    makeUsersProfilesRepository(),
+    makeSupabaseStorageFactory(),
+  );
+};
+
 const services = {
   createUserProfile,
   findUserProfile,
+  updateUserProfile,
 };
 
 export const makeUserProfileService = (

@@ -29,6 +29,13 @@ export class FindAllUsersCompanyUserService
     const users = await this.companiesUsersRepository.findAllByCompanyId({
       userId: props.userId,
       companyId: props.companyId,
+      filters: {
+        ...props,
+        specialties:
+          props?.specialties && typeof props.specialties !== 'object'
+            ? Array(props.specialties)
+            : props.specialties,
+      },
     });
 
     this.log('info', 'Finish process.');

@@ -92,6 +92,7 @@ model Company {
   CompanyAddress CompanyAddress?
   CompanyUser    CompanyUser[]
   CompanyInvites CompanyInvites[]
+  CompanyService CompanyService[]
 
   @@map("companies")
 }
@@ -130,4 +131,19 @@ model CompanyAddress {
   companyId String  @unique @map("company_id")
 
   @@map("companies_addresses")
+}
+
+model CompanyService {
+  id           String           @id @default(uuid())
+  name         String
+  time         String
+  price        Int
+  typeRequired SpecialtyTypes[] @map("type_required")
+  createdAt    DateTime         @default(now()) @map("created_at")
+  updatedAt    DateTime         @updatedAt @map("updated_at")
+
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String  @map("company_id")
+
+  @@map("companies_services")
 }

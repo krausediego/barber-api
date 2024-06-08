@@ -7,6 +7,7 @@ export interface IUsersProfilesRepository {
   findByUserId(
     data: IUsersProfilesRepository.FindByIdUserId,
   ): Promise<IUsersProfilesRepository.FindByUserIdResponse | null>;
+  update(data: IUsersProfilesRepository.UpdateProfile): Promise<void>;
 }
 
 export namespace IUsersProfilesRepository {
@@ -18,6 +19,24 @@ export namespace IUsersProfilesRepository {
     userId: string;
     createdAt: Date;
     updatedAt: Date | null;
+  }
+
+  export interface UpdateProfile {
+    id: string;
+    name?: string;
+    avatarUrl?: string;
+    specialties?: SpecialtyTypes[];
+  }
+
+  export interface UpdateProfileService {
+    id: string;
+    name?: string;
+    avatar?: {
+      fileName: string;
+      buffer: Buffer;
+      mimetype: string;
+    };
+    specialties?: SpecialtyTypes[];
   }
 
   export interface CreateUserProfileService {

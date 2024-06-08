@@ -1,9 +1,10 @@
-import { getHttpError, ok } from '@/application/helpers';
+import { getHttpError, noContent, ok } from '@/application/helpers';
 import { Controller, Http } from '@/application/interfaces';
 import {
   IUserProfile,
   ICreateUserProfile,
   IFindUserProfile,
+  IUpdateUserProfile,
 } from '@/domain/interfaces/services';
 
 export class UserProfileController implements Controller {
@@ -43,5 +44,18 @@ export class UserProfileController implements Controller {
     });
 
     return ok({ ...content });
+  }
+
+  private async updateUserProfile({
+    params,
+    locals,
+  }: IUpdateUserProfile.ParamsService): Promise<Http.Response> {
+    await (this.service() as IUpdateUserProfile).run({
+      ...params,
+      userId: locals?.user?.sub as string,
+      traceId: locals?.traceId,
+    });
+
+    return noContent();
   }
 }

@@ -1,5 +1,5 @@
 import { Locals } from '@/application/interfaces';
-import { ICompaniesUsersRepository } from '@/domain/interfaces';
+import { ICompaniesUsersRepository, SpecialtyTypes } from '@/domain/interfaces';
 
 export interface IFindAllUsersCompanyUser {
   run(
@@ -11,6 +11,9 @@ export namespace IFindAllUsersCompanyUser {
   export type Params = {
     userId: string;
     companyId: string;
+    name?: string;
+    email?: string;
+    specialties?: SpecialtyTypes[];
     traceId?: string;
   };
 

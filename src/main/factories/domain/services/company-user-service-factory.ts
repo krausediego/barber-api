@@ -1,8 +1,12 @@
 import {
   ICompanyUser,
+  IDeleteCompanyUser,
   IFindAllUsersCompanyUser,
 } from '@/domain/interfaces/services';
-import { FindAllUsersCompanyUserService } from '@/domain/services';
+import {
+  DeleteCompanyUserService,
+  FindAllUsersCompanyUserService,
+} from '@/domain/services';
 import { makeCompaniesUsersRepository } from '@/main/factories/domain/repositories';
 import { makeLogging } from '@/main/factories/infra';
 
@@ -13,8 +17,16 @@ const findAllUsersCompanyUser = (): IFindAllUsersCompanyUser => {
   );
 };
 
+const deleteCompanyUser = (): IDeleteCompanyUser => {
+  return new DeleteCompanyUserService(
+    makeLogging(),
+    makeCompaniesUsersRepository(),
+  );
+};
+
 const services = {
   findAllUsersCompanyUser,
+  deleteCompanyUser,
 };
 
 export const makeCompanyUserService = (

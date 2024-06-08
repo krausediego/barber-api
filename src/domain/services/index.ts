@@ -6,3 +6,4 @@ export * from './operation-time';
 export * from './user-profile';
 export * from './company-invite';
 export * from './company-user';
+export * from './company-service';

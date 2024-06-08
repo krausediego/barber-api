@@ -10,6 +10,12 @@ export interface ICompaniesUsersRepository {
   findAllByCompanyId(
     data: ICompaniesUsersRepository.FindAllByCompanyId,
   ): Promise<ICompaniesUsersRepository.FindAllByCompanyIdResponse[] | null>;
+  findById(
+    data: ICompaniesUsersRepository.FindById,
+  ): Promise<ICompaniesUsersRepository.CompanyUser | null>;
+  deleteCompanyUser(
+    data: ICompaniesUsersRepository.DeleteCompanyUser,
+  ): Promise<void>;
 }
 
 export namespace ICompaniesUsersRepository {
@@ -30,12 +36,26 @@ export namespace ICompaniesUsersRepository {
     userId: string;
   }
 
+  export interface DeleteCompanyUser {
+    id: string;
+  }
+
+  export interface FindById {
+    id: string;
+  }
+
   export interface FindAllByCompanyId {
     userId: string;
     companyId: string;
+    filters?: {
+      name?: string;
+      email?: string;
+      specialties?: SpecialtyTypes[];
+    };
   }
 
   export interface FindAllByCompanyIdResponse {
+    id: string;
     createdAt: Date;
     user: {
       email: string;

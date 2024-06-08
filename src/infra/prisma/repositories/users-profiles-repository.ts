@@ -24,4 +24,13 @@ export class UsersProfilesRepository implements IUsersProfilesRepository {
       },
     });
   }
+
+  async update({
+    id,
+    ...data
+  }: IUsersProfilesRepository.UpdateProfile): Promise<void> {
+    await this.prismaManager
+      .getPrisma()
+      .userProfile.update({ data, where: { id } });
+  }
 }

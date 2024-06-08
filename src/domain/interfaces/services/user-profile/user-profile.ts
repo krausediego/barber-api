@@ -1,9 +1,13 @@
-import { ICreateUserProfile, IFindUserProfile } from '.';
+import { ICreateUserProfile, IFindUserProfile, IUpdateUserProfile } from '.';
 
 export namespace IUserProfile {
   export type UserProfileServicesNames =
     | 'createUserProfile'
-    | 'findUserProfile';
+    | 'findUserProfile'
+    | 'updateUserProfile';
 
-  export type UserProfileServices = () => ICreateUserProfile | IFindUserProfile;
+  export type UserProfileServices = () =>
+    | ICreateUserProfile
+    | IFindUserProfile
+    | IUpdateUserProfile;
 }

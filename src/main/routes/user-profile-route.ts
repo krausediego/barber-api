@@ -1,7 +1,10 @@
 import { Router } from 'express';
 import multer from 'multer';
 
-import { createUserProfileValidateSchema } from '@/domain/schemas';
+import {
+  createUserProfileValidateSchema,
+  updateUserProfileValidateSchema,
+} from '@/domain/schemas';
 import { adaptRoute } from '@/main/adapters';
 import { makeUserProfileController } from '@/main/factories/application/controllers';
 import { validateRequest, authClient } from '@/main/middlewares';
@@ -17,6 +20,14 @@ export default (router: Router): void => {
     upload.single('avatar'),
     validateRequest(createUserProfileValidateSchema),
     adaptRoute(makeUserProfileController('createUserProfile')),
+  );
+
+  router.put(
+    `${routePrefix}/update`,
+    authClient,
+    upload.single('avatar'),
+    validateRequest(updateUserProfileValidateSchema),
+    adaptRoute(makeUserProfileController('updateUserProfile')),
   );
 
   router.get(

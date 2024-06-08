@@ -5,3 +5,4 @@ export * from './operations-times-repository';
 export * from './users-profiles-repository';
 export * from './companies-users-repository';
 export * from './companies-invites-repository';
+export * from './companies-services-repository';

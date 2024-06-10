@@ -61,12 +61,16 @@ export class App {
 
     router.get('/', (_, res) => res.status(200).send('ok'));
 
-    const routerPath = path.resolve(__dirname, '../routes');
-    readdirSync(routerPath)
-      .filter(file => !file.endsWith('.map'))
-      .forEach(async file => {
-        (await import(`${routerPath}/${file}`)).default(router);
-      });
+    const directories = readdirSync(path.resolve(__dirname, '../routes'));
+
+    directories.map(async directory => {
+      const routerPath = path.resolve(__dirname, '../routes', directory);
+      readdirSync(routerPath)
+        .filter(file => !file.endsWith('.map'))
+        .forEach(async file => {
+          (await import(`${routerPath}/${file}`)).default(router);
+        });
+    });
 
     this.app.use(this.errorHandler.bind(this));
 

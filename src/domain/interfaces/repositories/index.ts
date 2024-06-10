@@ -6,3 +6,4 @@ export * from './users-profiles';
 export * from './companies-users';
 export * from './companies-invites';
 export * from './companies-services';
+export * from './users-clients';

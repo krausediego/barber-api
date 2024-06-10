@@ -155,7 +155,10 @@ model CompanyService {
   @@map("companies_services")
 }
 
-// User clients models (mobile)
+// -----------------------------------------------------------------//
+//                   USER CLIENTS MODELS                            //
+//                        (mobile)                                  //
+// -----------------------------------------------------------------//
 
 model UserClient {
   id        String   @id @default(uuid())

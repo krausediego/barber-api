@@ -3,7 +3,7 @@ import {
   ICompaniesServicesRepository,
   LoggingManager,
 } from '@/domain/interfaces';
-import { ICreateCompanyService } from '@/domain/interfaces/services/company-service';
+import { ICreateCompanyService } from '@/domain/interfaces/services/manager/company-service';
 
 export class CreateCompanyServiceService
   extends BaseService

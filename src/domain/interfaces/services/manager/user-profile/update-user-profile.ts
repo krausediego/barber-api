@@ -1,6 +1,6 @@
 import { Locals } from '@/application/interfaces';
 
-import { IUsersProfilesRepository } from '../../repositories';
+import { IUsersProfilesRepository } from '../../../repositories';
 
 export interface IUpdateUserProfile {
   run(params: IUpdateUserProfile.Params): Promise<void>;
